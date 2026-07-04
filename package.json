@@ -10,14 +10,13 @@
 		"scheduling"
 	],
 	"license": "MIT",
-	"homepage": "https://velagain.com",
+	"homepage": "https://github.com/leonsgithub/n8n-nodes-velagain#readme",
 	"author": {
 		"name": "Velagain"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/leonsgithub/Saas-code.git",
-		"directory": "integrations/n8n"
+		"url": "git+https://github.com/leonsgithub/n8n-nodes-velagain.git"
 	},
 	"engines": {
 		"node": ">=18.10"
@@ -54,5 +53,8 @@
 		"eslint-plugin-n8n-nodes-base": "^1.16.3",
 		"n8n-workflow": "^1.60.0",
 		"typescript": "^5.6.0"
+	},
+	"bugs": {
+		"url": "https://github.com/leonsgithub/n8n-nodes-velagain/issues"
 	}
 }
