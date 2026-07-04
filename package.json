@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-velagain",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "n8n community node for Velagain — booking automation triggers and actions.",
 	"keywords": [
 		"n8n-community-node-package",
@@ -12,7 +12,8 @@
 	"license": "MIT",
 	"homepage": "https://github.com/leonsgithub/n8n-nodes-velagain#readme",
 	"author": {
-		"name": "Velagain"
+		"name": "Velagain",
+		"email": "npm-package-velagain.numeric635@passmail.net"
 	},
 	"repository": {
 		"type": "git",
