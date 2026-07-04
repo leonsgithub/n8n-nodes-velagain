@@ -33,6 +33,7 @@ export class Velagain implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Create and manage Velagain bookings and customers',
+		usableAsTool: true,
 		defaults: {
 			name: 'Velagain',
 		},

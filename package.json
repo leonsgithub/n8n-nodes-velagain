@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-velagain",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "n8n community node for Velagain — booking automation triggers and actions.",
 	"keywords": [
 		"n8n-community-node-package",
