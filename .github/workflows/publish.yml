@@ -1,17 +1,13 @@
 # Provenance-publishing workflow for n8n-nodes-velagain.
 #
-# WHERE THIS GOES: the DEDICATED PUBLIC repo for the node, at
-#   .github/workflows/publish.yml
-# (npm provenance requires a PUBLIC GitHub repo — it cannot be generated from
-#  the private Saas-code monorepo. n8n's verified program, since 2026-05-01,
-#  requires a provenance statement, so a local `npm publish` is not eligible.)
+# npm provenance requires a PUBLIC GitHub repo (n8n's verified program, since
+# 2026-05-01, requires a provenance statement — a local `npm publish` is not
+# eligible). Add an `NPM_TOKEN` (npm *automation* token) secret to this repo.
 #
-# PREREQUISITE SECRET: add `NPM_TOKEN` (an npm *automation* token) to the public
-# repo → Settings → Secrets and variables → Actions.
-#
-# TRIGGER: create a GitHub Release (or push a v* tag). The job builds and
-# publishes with `--provenance`, which stamps the package with a verifiable
-# link back to this repo + commit.
+# Release flow: bump the version in package.json, then create a GitHub Release
+# (tag v<version>). The job publishes with `--provenance`. Publishing is
+# idempotent — if that version is already on npm, it is skipped (no red X),
+# so re-running or releasing an already-published version succeeds cleanly.
 
 name: Publish n8n node (provenance)
 
@@ -39,6 +35,14 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
-      - run: npm publish --provenance --access public
+      - name: Publish (skip if version already on npm)
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VER=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VER" version >/dev/null 2>&1; then
+            echo "$NAME@$VER is already published — nothing to do."
+          else
+            npm publish --provenance --access public
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
