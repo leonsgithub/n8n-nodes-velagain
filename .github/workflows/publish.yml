@@ -1,0 +1,44 @@
+# Provenance-publishing workflow for n8n-nodes-velagain.
+#
+# WHERE THIS GOES: the DEDICATED PUBLIC repo for the node, at
+#   .github/workflows/publish.yml
+# (npm provenance requires a PUBLIC GitHub repo — it cannot be generated from
+#  the private Saas-code monorepo. n8n's verified program, since 2026-05-01,
+#  requires a provenance statement, so a local `npm publish` is not eligible.)
+#
+# PREREQUISITE SECRET: add `NPM_TOKEN` (an npm *automation* token) to the public
+# repo → Settings → Secrets and variables → Actions.
+#
+# TRIGGER: create a GitHub Release (or push a v* tag). The job builds and
+# publishes with `--provenance`, which stamps the package with a verifiable
+# link back to this repo + commit.
+
+name: Publish n8n node (provenance)
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # required for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci --ignore-scripts
+      - run: npm run lint
+      - run: npm run build
+
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
