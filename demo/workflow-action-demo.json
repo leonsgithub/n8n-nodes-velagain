@@ -1,0 +1,39 @@
+{
+  "name": "Velagain demo — create a customer (action)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b1a1c1d1-0001-4001-8001-000000000001",
+      "name": "When clicking Test",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "resource": "customer",
+        "operation": "create",
+        "display_name": "Demo Customer",
+        "customerFields": {
+          "email": "demo.customer@example.com",
+          "phone": "+66900000000"
+        }
+      },
+      "id": "b1a1c1d1-0002-4001-8001-000000000002",
+      "name": "Velagain: Create Customer",
+      "type": "n8n-nodes-velagain.velagain",
+      "typeVersion": 1,
+      "position": [680, 300],
+      "credentials": {
+        "velagainApi": { "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID", "name": "Velagain API" }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking Test": {
+      "main": [[{ "node": "Velagain: Create Customer", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {},
+  "pinData": {}
+}

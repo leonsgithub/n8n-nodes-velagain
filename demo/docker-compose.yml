@@ -1,0 +1,25 @@
+# Local n8n for recording the Velagain verified-node demo video.
+#
+#   docker compose up
+#   open http://localhost:5678
+#
+# --tunnel gives n8n a PUBLIC webhook URL so the Velagain Trigger can actually
+# receive a booking.created delivery from the Velagain backend (self-hosted n8n
+# on localhost is otherwise unreachable from the server). Tunnel is for
+# demo/testing only, never production.
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    command: start --tunnel
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      - N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
+      - N8N_SECURE_COOKIE=false
+      - GENERIC_TIMEZONE=Asia/Bangkok
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
